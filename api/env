@@ -5,3 +5,4 @@ POSTGRES_PASSWORD=winnipeg
 POSTGRES_DB=winnipeg
 DB_HOSTNAME=localhost
 NODE_ENV=development
+TRANSIT_API_KEY=

@@ -20,8 +20,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Routers
+const stop = require('./src/routes/stop');
 
 //Using Routes
+app.use('/stop', stop);
 
 //Base route
 app.get('/', (req, res) => {
