@@ -1,0 +1,45 @@
+.ml {
+  margin-left: 0.5rem !important;
+}
+
+.mr {
+  margin-right: 0.5rem !important;
+}
+
+.mt {
+  margin-top: 0.5rem !important;
+}
+
+.mb {
+  margin-bottom: 0.5rem !important;
+}
+
+.addBox {
+  height: 300px;
+  width: 280px;
+}
+
+.newProject {
+  text-align: center;
+  line-height: 220px;
+  vertical-align: middle;
+  width: 230px;
+}
+
+.projectTitle {
+  padding-top: 90px;
+}
+
+.titleText {
+  font-family: 'Lobster', cursive !important;
+  font-weight: lighter !important;
+  font-size: 26px;
+}
+
+.product_cards {
+  width: 245px;
+}
+
+.sidebar {
+  width: 200px;
+}

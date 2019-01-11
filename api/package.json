@@ -1,0 +1,35 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "docker build -t dbudnick/winnipeg-bus-web-api . && docker login && docker push dbudnick/winnipeg-bus-web-api",
+    "deploy-start": "yarn sq db:migrate && yarn start",
+    "sq": "./node_modules/.bin/sequelize --config db/config/config.js --models-path db/models --migrations-path db/migrations",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "dbd": "yarn sq db:drop",
+    "dbc": "yarn sq db:create",
+    "dbm": "yarn sq db:migrate",
+    "dbr": "yarn dbd && yarn dbc && yarn dbm"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "pg": "^7.6.0",
+    "pg-hstore": "^2.3.2",
+    "pino": "^5.6.4",
+    "sequelize": "^4.41.0",
+    "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "pino-pretty": "^2.2.1",
+    "sequelize-auto-migrations": "^1.0.2",
+    "sequelize-cli": "^5.1.0"
+  }
+}
