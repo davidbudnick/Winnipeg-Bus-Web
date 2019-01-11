@@ -16,7 +16,7 @@ async function getBusData(stopNumber, busNumber) {
 
   //checks if the transit system is "regular" or online
   if (systemStatus === 'regular') {
-    let url = `https://api.winnipegtransit.com/v3/stops/${stopNumber}/schedule.json?max-results-per-route=50&api-key=${
+    let url = `https://api.winnipegtransit.com/v3/stops/${stopNumber}/schedule.json?max-results-per-route=1000&api-key=${
       process.env.TRANSIT_API_KEY
     }`;
 
@@ -27,11 +27,39 @@ async function getBusData(stopNumber, busNumber) {
     }).catch((err) => {
       logger.error(`There was an error looking up this ${stopNumber} stop number`, err);
     });
-    // prettier-ignore
-    return busData.data["stop-schedule"]["route-schedules"]
+
+    //Parse the buses with the specifc bus number out of the list of curretn buses
+    let parsedBusData = await parseBus(busNumber, busData);
+
+    return parsedBusData;
   } else {
     return `Bus System down with a status of ${systemStatus}`;
   }
+}
+
+function convertInformation(busData) {
+  let busInformation = [];
+}
+
+/**
+ * @param {Bus Number} busNumber
+ * Parses out the bus number from the list of json
+ */
+async function parseBus(busNumber, busData) {
+  //Parsed bus data is uses for only buses you want
+  let parsedBusData = [];
+
+  // loops though the list of all the buses
+  for (let bus of busData.data['stop-schedule']['route-schedules']) {
+    //checks if the bus number is the same as the picked bus number
+    if (bus.route.number === parseInt(busNumber)) {
+      //pushes the picked bus to the list of parsed bus results
+      parsedBusData.push(bus);
+    }
+  }
+
+  //Returns all parsed buses from busData
+  return parsedBusData;
 }
 
 /**
@@ -42,6 +70,7 @@ async function checkSystem() {
   //Check if the bus system is actice
   let url = `https://api.winnipegtransit.com/v3/statuses/schedule.json?api-key=${process.env.TRANSIT_API_KEY}`;
 
+  //Queries the trasit api from system informtaion
   let systemData = await axios({
     method: 'get',
     url,
@@ -49,6 +78,7 @@ async function checkSystem() {
     logger.error('There was an error looking up the status of the bus system', err);
   });
 
+  //Returns status of bus system
   return systemData.data.status.value;
 }
 
