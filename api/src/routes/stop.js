@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const backups = require('../stop');
+const stop = require('../stop');
 const pino = require('pino');
 const logger = pino({ prettyPrint: { colorize: true }, level: process.env.LOG_LEVEL || 'info', name: 'index' });
 
-async function getBusData(routeNumber, busNumber) {}
+router.get('/:stopNumber/busNumber', async (req, res, next) => {
+  let stopData = await stop.getBusData(req.params.stopNumber, req.params.busNumber);
+  res.send(stopData);
+});
