@@ -1,2 +1,2 @@
 # Winnipeg Bus Web
-Mobile App using the Winnipeg Transit API
+Mobile App web using the Winnipeg Transit API
