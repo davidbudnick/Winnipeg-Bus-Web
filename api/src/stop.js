@@ -3,6 +3,9 @@ const pino = require('pino');
 const logger = pino({ prettyPrint: { colorize: true }, level: process.env.LOG_LEVEL || 'info', name: 'index' });
 const db = require('../db');
 const axios = require('axios');
+const timediff = require('timediff');
+const dateTime = require('date-time');
+const isEmpty = require('is-empty');
 
 /**
  *
@@ -31,14 +34,76 @@ async function getBusData(stopNumber, busNumber) {
     //Parse the buses with the specifc bus number out of the list of curretn buses
     let parsedBusData = await parseBus(busNumber, busData);
 
-    return parsedBusData;
+    //Takes the parsed bus data and get time diff and more information
+    let information = await convertInformation(parsedBusData);
+
+    return information;
   } else {
     return `Bus System down with a status of ${systemStatus}`;
   }
 }
 
-function convertInformation(busData) {
+/**
+ *
+ * @param {All Bus Data from requested bus} busData
+ * @returns {JSON data of bus information}
+ */
+function convertInformation(parsedBusData) {
+  //Stores bus infromation
   let busInformation = [];
+
+  //Checks if the parsed bus data is empty
+  if (isEmpty(parsedBusData)) {
+    //Sends message to the user is there are not buses
+    busInformation.push('NO BUSES AVAILABLE');
+  } else {
+    //Loops though the scheduled stops
+    for (let bus of parsedBusData[0]['scheduled-stops']) {
+      //Arriaval Time of bus
+      let arrivalTime = bus.times.arrival.estimated;
+
+      //Departue Time of bus
+      let departureTime = bus.times.departure.estimated;
+
+      //Checks if the buses are [OK, EARLY, LATE]
+      let timeDiff = timediff(arrivalTime, departureTime);
+
+      //Status of busses
+      let status;
+
+      //Checks for ontime
+      if (timeDiff.minutes === 0) {
+        status = 'OK';
+
+        //Checks for late
+      } else if (timeDiff.minutes < 0) {
+        status = 'LATE';
+
+        //Checks for early
+      } else if (timeDiff.minutes > 0) {
+        status = 'EARLY';
+      }
+
+      //Checks current time compared to departure time for time till bus comes
+      let time = timediff(dateTime(), departureTime);
+
+      //Created JSON object that send back information about the bus
+      let data = {
+        routeNumber: parsedBusData[0]['route']['number'],
+        name: parsedBusData[0]['route']['name'],
+        status: status,
+        time: time.minutes,
+        arrivalTime: arrivalTime,
+        departureTime: departureTime,
+      };
+
+      //Pushes the JSON object to the busInformation
+      busInformation.push(data);
+    }
+  }
+
+  //Returns the collection of bus time and information back
+  return busInformation;
 }
 
 /**
