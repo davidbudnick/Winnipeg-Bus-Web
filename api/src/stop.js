@@ -63,7 +63,7 @@ function convertInformation(parsedBusData) {
       let arrivalTime = bus.times.arrival.estimated;
 
       //Departue Time of bus
-      let departureTime = bus.times.departure.estimated;
+      let departureTime = bus.times.arrival.scheduled;
 
       //Checks if the buses are [OK, EARLY, LATE]
       let timeDiff = timediff(arrivalTime, departureTime);
@@ -93,8 +93,6 @@ function convertInformation(parsedBusData) {
         name: parsedBusData[0]['route']['name'],
         status: status,
         time: time.minutes,
-        arrivalTime: arrivalTime,
-        departureTime: departureTime,
       };
 
       //Pushes the JSON object to the busInformation

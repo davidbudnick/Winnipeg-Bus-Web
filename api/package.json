@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "deploy": "docker build -t dbudnick/winnipeg-bus-web-api . && docker login && docker push dbudnick/winnipeg-bus-web-api",
     "deploy-start": "yarn sq db:migrate && yarn start",
     "sq": "./node_modules/.bin/sequelize --config db/config/config.js --models-path db/models --migrations-path db/migrations",
