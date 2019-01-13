@@ -93,19 +93,44 @@ function convertInformation(parsedBusData) {
       //Checks if the time is less than 10 and adds a 0
       if (time.seconds < 10 && time.seconds > 0) {
         formattedTime = `${time.minutes}:0${time.seconds}`;
+        //Cheecks if the secons are negative and add zero and removes dash
       } else if (time.seconds < 10 && time.seconds < 0) {
         formattedTime = `${time.minutes.substr(1)}:0${time.seconds.substr(1)}`;
+        //Checks if it is a negative time and removes dash
       } else if (time.seconds < 0) {
         formattedTime = `${time.minutes.substr(1)}:0${time.seconds.substr(1)}`;
       } else {
+        //Formatted time
         formattedTime = `${time.minutes}:${time.seconds}`;
+      }
+
+      //Splits the route name out of the string
+      let formattedName = parsedBusData[0]['route']['name']
+        .split(' ')
+        .splice(-1)
+        .toString();
+
+      //Splits the current route name and removes dash
+      var arrayOfName = formattedName.split('-');
+
+      //Stores the spaced name
+      let spacedName = '';
+
+      //Loops though the spaced name and creates formatted string of full name
+      for (let name of arrayOfName) {
+        //Adds the name elements to the overall string
+        spacedName += `${name} `;
       }
 
       //Created JSON object that send back information about the bus
       let data = {
+        //Holds the current route number
         routeNumber: parsedBusData[0]['route']['number'],
-        name: parsedBusData[0]['route']['name'],
+        //Holds the route name
+        name: spacedName.trim(),
+        //Holds the status of the bus
         status: status,
+        //Holds the time till the bus comes
         time: formattedTime,
       };
 
