@@ -87,12 +87,26 @@ function convertInformation(parsedBusData) {
       //Checks current time compared to departure time for time till bus comes
       let time = timediff(dateTime(), departureTime);
 
+      //Formatted time with seconds
+      let formattedTime;
+
+      //Checks if the time is less than 10 and adds a 0
+      if (time.seconds < 10 && time.seconds > 0) {
+        formattedTime = `${time.minutes}:0${time.seconds}`;
+      } else if (time.seconds < 10 && time.seconds < 0) {
+        formattedTime = `${time.minutes.substr(1)}:0${time.seconds.substr(1)}`;
+      } else if (time.seconds < 0) {
+        formattedTime = `${time.minutes.substr(1)}:0${time.seconds.substr(1)}`;
+      } else {
+        formattedTime = `${time.minutes}:${time.seconds}`;
+      }
+
       //Created JSON object that send back information about the bus
       let data = {
         routeNumber: parsedBusData[0]['route']['number'],
         name: parsedBusData[0]['route']['name'],
         status: status,
-        time: time.minutes,
+        time: formattedTime,
       };
 
       //Pushes the JSON object to the busInformation
