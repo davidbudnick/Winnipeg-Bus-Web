@@ -3,7 +3,6 @@ import { Route, withRouter, Switch } from 'react-router-dom';
 import Callback from './Callback';
 import auth0Client from './Auth';
 import NavBar from './components/elements/NavBar';
-import Dashboard from './components/pages/Dashboard';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +27,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <NavBar /> */}
           <Switch>
             <Route exact path="/callback" component={Callback} />
             <Route exact path="/" component={NavBar} />
