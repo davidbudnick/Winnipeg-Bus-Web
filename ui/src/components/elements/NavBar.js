@@ -18,6 +18,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Refresh from '@material-ui/icons/Refresh';
 
 const drawerWidth = 240;
 
@@ -116,6 +117,16 @@ class PersistentDrawerLeft extends React.Component {
             <Typography variant="h6" color="inherit" noWrap>
               Winnipeg Bus Live
             </Typography>
+
+            <IconButton
+              color="inherit"
+              className="ml"
+              // onClick={this.handleDrawerOpen}
+              //Change this to refresh the axios request
+              // className={classNames(classes.menuButton, open && classes.hide)}
+            >
+              <Refresh />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer

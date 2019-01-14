@@ -38,7 +38,7 @@ function Dashboard(props) {
           </Typography>
           <Typography className={classes.pos} variant="h5" color="textSecondary">
             <DeleteOutlinedIcon className={classes.icon} />
-            Grant
+            Grant to Dieppe Loop
           </Typography>
           <Typography component="p" variant="h4">
             OK 6:49
