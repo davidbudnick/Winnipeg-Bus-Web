@@ -1,94 +1,152 @@
-/* eslint-disable */
-import React, { Component } from 'react';
-import auth0Client from '../../Auth';
-import { Link, withRouter } from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-export class NavBar extends Component {
+const drawerWidth = 240;
+
+const styles = (theme) => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+  menuButton: {
+    marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
+});
+
+class ResponsiveDrawer extends React.Component {
+  state = {
+    mobileOpen: false,
+  };
+
+  handleDrawerToggle = () => {
+    this.setState((state) => ({ mobileOpen: !state.mobileOpen }));
+  };
+
   render() {
-    const goHome = () => {
-      this.props.history.replace('/profile/' + auth0Client.getProfile().sub);
-    };
+    const { classes, theme } = this.props;
 
-    const signOut = () => {
-      auth0Client.signOut();
-      this.props.history.replace('/');
-    };
+    const drawer = (
+      <div>
+        <div className={classes.toolbar} />
+        <Divider />
+        <List>
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
 
     return (
-      <nav className="navbar is-dark">
-        <div className="navbar-brand">
-          <div className="is-hidden-desktop">
-            {auth0Client.isAuthenticated() && (
-              <div className="navbar-start">
-                <a
-                  className="navbar-item titleText has-text-white"
-                  onClick={() => {
-                    goHome();
-                  }}
-                >
-                  Winnipeg Bus Web
-                </a>
-              </div>
-            )}
-            <span />
-            <span />
-          </div>
-        </div>
-
-        <div id="navMenuColorprimary-example" className="navbar-menu">
-          {auth0Client.isAuthenticated() && (
-            <div className="navbar-start">
-              <a
-                className="navbar-item titleText"
-                onClick={() => {
-                  goHome();
-                }}
-              >
-                Winnipeg Bus Web
-              </a>
-            </div>
-          )}
-          {!auth0Client.isAuthenticated() && (
-            <div className="navbar-start">
-              <a className="navbar-item titleText">Winnipeg Bus Web</a>
-            </div>
-          )}
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="field is-grouped">
-                {!auth0Client.isAuthenticated() && (
-                  <p className="control">
-                    <a className="bd-tw-button button is-info" onClick={auth0Client.signIn}>
-                      <span>Sign in</span>
-                    </a>
-                  </p>
-                )}
-                {auth0Client.isAuthenticated() && (
-                  <p className="control mt">
-                    <a className="has-text-white">
-                      <label className="mr">{auth0Client.getProfile().name}</label>
-                    </a>
-                  </p>
-                )}
-                {auth0Client.isAuthenticated() && (
-                  <p className="control">
-                    <a
-                      className="bd-tw-button button is-info"
-                      onClick={() => {
-                        signOut();
-                      }}
-                    >
-                      <span>Sign out</span>
-                    </a>
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" noWrap>
+              Winnipeg Bus Web
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer}>
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={this.props.container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={this.state.mobileOpen}
+              onClose={this.handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+        </main>
+      </div>
     );
   }
 }
 
-export default withRouter(NavBar);
+ResponsiveDrawer.propTypes = {
+  classes: PropTypes.object.isRequired,
+  // Injected by the documentation to work in an iframe.
+  // You won't need it on your project.
+  container: PropTypes.object,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
