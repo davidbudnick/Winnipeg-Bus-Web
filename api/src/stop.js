@@ -104,34 +104,20 @@ function convertInformation(parsedBusData) {
         formattedTime = `${time.minutes}:${time.seconds}`;
       }
 
-      //Splits the route name out of the string
-      let formattedName = parsedBusData[0]['route']['name']
-        .split(' ')
-        .splice(-1)
-        .toString();
-
-      //Splits the current route name and removes dash
-      var arrayOfName = formattedName.split('-');
-
-      //Stores the spaced name
-      let spacedName = '';
-
-      //Loops though the spaced name and creates formatted string of full name
-      for (let name of arrayOfName) {
-        //Adds the name elements to the overall string
-        spacedName += `${name} `;
-      }
-
       //Created JSON object that send back information about the bus
       let data = {
+        //Id for the current bus
+        key: bus.key,
         //Holds the current route number
         routeNumber: parsedBusData[0]['route']['number'],
         //Holds the route name
-        name: spacedName.trim(),
+        name: bus.variant.name,
         //Holds the status of the bus
         status: status,
         //Holds the time till the bus comes
         time: formattedTime,
+        //If the bus is cancelled
+        cancelled: bus.cancelled,
       };
 
       //Pushes the JSON object to the busInformation
