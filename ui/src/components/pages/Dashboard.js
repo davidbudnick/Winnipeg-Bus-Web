@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-// import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteOutlinedIcon from '@material-ui/icons/LocationOn';
 
@@ -30,25 +30,23 @@ function Dashboard(props) {
   // const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div className="ml mr">
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography variant="h2" component="h1">
-            64
-          </Typography>
-          <Typography className={classes.pos} variant="h5" color="textSecondary">
-            <DeleteOutlinedIcon className={classes.icon} />
-            Grant to Dieppe Loop
-          </Typography>
-          <Typography component="p" variant="h4">
-            OK 6:49
-          </Typography>
-        </CardContent>
-        {/* <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions> */}
-      </Card>
-    </div>
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography variant="h2" component="h1">
+          64
+        </Typography>
+        <Typography className={classes.pos} variant="h5" color="textSecondary">
+          <DeleteOutlinedIcon className={classes.icon} />
+          Grant to Dieppe Loop
+        </Typography>
+        <Typography component="p" variant="h4">
+          OK 6:49
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">More Info</Button>
+      </CardActions>
+    </Card>
   );
 }
 

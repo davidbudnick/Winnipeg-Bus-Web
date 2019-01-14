@@ -28,10 +28,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <NavBar />
+          {/* <NavBar /> */}
           <Switch>
             <Route exact path="/callback" component={Callback} />
-            <Route component={Dashboard} />
+            <Route exact path="/" component={NavBar} />
           </Switch>
         </header>
       </div>

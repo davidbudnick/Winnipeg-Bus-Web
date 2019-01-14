@@ -19,6 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Refresh from '@material-ui/icons/Refresh';
+import Dashboard from '../pages/Dashboard';
 
 const drawerWidth = 240;
 
@@ -118,13 +119,7 @@ class PersistentDrawerLeft extends React.Component {
               Winnipeg Bus Live
             </Typography>
 
-            <IconButton
-              color="inherit"
-              className="ml"
-              // onClick={this.handleDrawerOpen}
-              //Change this to refresh the axios request
-              // className={classNames(classes.menuButton, open && classes.hide)}
-            >
+            <IconButton color="inherit" className="ml">
               <Refresh />
             </IconButton>
           </Toolbar>
@@ -167,7 +162,9 @@ class PersistentDrawerLeft extends React.Component {
             [classes.contentShift]: open,
           })}
         >
-          <div className="header" />
+          <div className="header">
+            <Dashboard />
+          </div>
         </main>
       </div>
     );
