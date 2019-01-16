@@ -95,6 +95,7 @@ function convertInformation(parsedBusData) {
         formattedTime = `${time.minutes}:0${time.seconds}`;
         //Cheecks if the secons are negative and add zero and removes dash
       } else if (time.seconds < 10 && time.seconds < 0) {
+        //* Some how broken here */
         formattedTime = `${time.minutes.substr(1)}:0${time.seconds.substr(1)}`;
         //Checks if it is a negative time and removes dash
       } else if (time.seconds < 0) {
