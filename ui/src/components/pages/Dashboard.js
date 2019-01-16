@@ -27,8 +27,6 @@ const styles = {
 
 function Dashboard(props) {
   const { classes } = props;
-  // const bull = <span className={classes.bullet}>•</span>;
-
   return (
     <Card className={classes.card}>
       <CardContent>
