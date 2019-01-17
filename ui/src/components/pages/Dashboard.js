@@ -5,13 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteOutlinedIcon from '@material-ui/icons/LocationOn';
+import Grid from '@material-ui/core/Grid';
 
 export class Dashboard extends Component {
   state = {
     busInformation: [],
   };
   async componentDidMount() {
-    //used for the load of the infromation
     const res = await fetch('http://localhost:4000/stop/10611/18');
     const blocks = await res.json();
 
@@ -27,11 +27,9 @@ export class Dashboard extends Component {
         this.setState({
           busInformation: blocks,
         });
-
-        console.log(this.state.busInformation);
-      }, 1000);
-    } catch (e) {
-      console.log(e);
+      }, 2000);
+    } catch (error) {
+      console.log('Rate Limit Reached');
     }
   }
 
@@ -61,7 +59,9 @@ export class Dashboard extends Component {
     return (
       <div>
         <br />
-        <div>{buses}</div>
+        <Grid container spacing={8}>
+          <div>{buses}</div>
+        </Grid>
       </div>
     );
   }

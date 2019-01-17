@@ -8,7 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -18,8 +18,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import Refresh from '@material-ui/icons/Refresh';
+import LogAction from '@material-ui/icons/ExitToApp';
+
+import Bus from '@material-ui/icons/DirectionsBus';
 import Dashboard from '../pages/Dashboard';
+import Account from '@material-ui/icons/AccountBox';
 
 const drawerWidth = 240;
 
@@ -118,10 +121,6 @@ class PersistentDrawerLeft extends React.Component {
             <Typography variant="h6" color="inherit" noWrap>
               Winnipeg Bus Live
             </Typography>
-
-            <IconButton color="inherit" className="ml">
-              <Refresh />
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -138,20 +137,22 @@ class PersistentDrawerLeft extends React.Component {
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
-          <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            {['Login'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{index === 0 ? <LogAction /> : null}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
-          <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['Account', 'My Busses', 'Logout'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>
+                  {index === 0 ? <Account /> : null}
+                  {index === 1 ? <Bus /> : null}
+                  {index === 2 ? <LogAction /> : null}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
