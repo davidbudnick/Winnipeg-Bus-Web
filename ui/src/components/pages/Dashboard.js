@@ -11,7 +11,7 @@ export class Dashboard extends Component {
     busInformation: [],
   };
   async componentDidMount() {
-    const res = await fetch('http://localhost:4000/stop/10611/18');
+    const res = await fetch('http://localhost:4000/stop/10611/64');
     const blocks = await res.json();
 
     this.setState({
@@ -20,7 +20,7 @@ export class Dashboard extends Component {
 
     try {
       setInterval(async () => {
-        const res = await fetch('http://localhost:4000/stop/10611/18');
+        const res = await fetch('http://localhost:4000/stop/10611/64');
         const blocks = await res.json();
 
         this.setState({
