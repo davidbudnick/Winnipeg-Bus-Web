@@ -16,10 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import LogAction from '@material-ui/icons/ExitToApp';
-
 import Bus from '@material-ui/icons/DirectionsBus';
 import Dashboard from '../pages/Dashboard';
 import Account from '@material-ui/icons/AccountBox';

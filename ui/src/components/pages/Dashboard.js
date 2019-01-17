@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteOutlinedIcon from '@material-ui/icons/LocationOn';
-import Grid from '@material-ui/core/Grid';
 
 export class Dashboard extends Component {
   state = {
@@ -36,7 +35,7 @@ export class Dashboard extends Component {
   render() {
     const buses = this.state.busInformation.map((bus) => (
       <div key={bus.key}>
-        <Card className="minwidth: 275 mt">
+        <Card className="minwidth: 275 mt mb">
           <CardContent>
             <Typography variant="h2" component="h1">
               {bus.routeNumber}
@@ -58,10 +57,7 @@ export class Dashboard extends Component {
 
     return (
       <div>
-        <br />
-        <Grid container spacing={8}>
-          <div>{buses}</div>
-        </Grid>
+        <div>{buses}</div>
       </div>
     );
   }
