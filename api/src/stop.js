@@ -72,6 +72,9 @@ function convertInformation(parsedBusData) {
       let status;
 
       //Checks for ontime
+      // if (timeDiff.minutes === 0 && timeDiff.seconds < 0) {
+      //   status = 'DUE';
+      // }
       if (timeDiff.minutes === 0) {
         status = 'OK';
 
